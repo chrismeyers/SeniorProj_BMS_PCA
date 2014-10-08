@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.Office.Tools.Ribbon;
 using System.Windows.Forms;
+using PCA_Addin.Classes;
+
 
 namespace PCA_Addin
 {
@@ -68,5 +70,14 @@ namespace PCA_Addin
                 DOP.Write_Out_Calculation();
             
         }
+
+
+        private void Scores_bt_Click(object sender, RibbonControlEventArgs e)
+        {
+            PCA_graphing pca_Graphing = new PCA_graphing();
+            pca_Graphing.Scores_Plot(0,0);
+        }
+       
+        
     }
 }
