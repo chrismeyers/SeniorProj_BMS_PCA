@@ -5,6 +5,8 @@ using System.Text;
 using Microsoft.Office.Tools.Ribbon;
 using System.Windows.Forms;
 using PCA_Addin.Classes;
+using Excel = Microsoft.Office.Interop.Excel;
+using PCA_Addin.Forms;
 
 
 namespace PCA_Addin
@@ -71,11 +73,12 @@ namespace PCA_Addin
             
         }
 
-
+        // Senior Project
         private void Scores_bt_Click(object sender, RibbonControlEventArgs e)
         {
             PCA_graphing pca_Graphing = new PCA_graphing();
-            pca_Graphing.Scores_Plot(0,0);
+            Form1 scores = new Form1();
+            scores.Show();
         }
        
         
