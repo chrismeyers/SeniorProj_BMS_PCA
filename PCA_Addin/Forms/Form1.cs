@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using PCA_Addin.Classes;
 
 namespace PCA_Addin.Forms
 {
@@ -23,7 +22,7 @@ namespace PCA_Addin.Forms
             string col2 = textBox2.Text;
 
             PCA_graphing pcaGraphing = new PCA_graphing();
-            pcaGraphing.Scores_Plot(col1, col2);
+            pcaGraphing.scoresPlot(col1, col2);
             this.Close();
         }
 

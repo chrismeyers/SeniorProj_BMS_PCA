@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Microsoft.Office.Tools.Ribbon;
 using System.Windows.Forms;
-using PCA_Addin.Classes;
 using Excel = Microsoft.Office.Interop.Excel;
 using PCA_Addin.Forms;
 
@@ -73,7 +72,14 @@ namespace PCA_Addin
             
         }
 
-        // Senior Project
+        /*
+         * Senior Project
+         * 
+         * Upon selecting the scores plot option in the Excel add-in ribbon,
+         * form1 appears and prompts the user to specify the desired columns
+         * to be graphed.
+         * 
+         */
         private void Scores_bt_Click(object sender, RibbonControlEventArgs e)
         {
             PCA_graphing pca_Graphing = new PCA_graphing();
