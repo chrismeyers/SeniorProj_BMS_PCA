@@ -72,14 +72,15 @@ namespace PCA_Addin
             
         }
 
-        /*
-         * Senior Project
-         * 
-         * Upon selecting the scores plot option in the Excel add-in ribbon,
-         * form1 appears and prompts the user to specify the desired columns
-         * to be graphed.
-         * 
-         */
+
+        /// <summary>
+        /// Upon selecting the scores plot option in the Excel add-in ribbon,
+        /// form1 appears and prompts the user to specify the desired columns
+        /// to be graphed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <author>Rowan Senior Project</author>
         private void Scores_bt_Click(object sender, RibbonControlEventArgs e)
         {
             PCA_graphing pca_Graphing = new PCA_graphing();

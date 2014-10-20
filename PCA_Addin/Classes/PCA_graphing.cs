@@ -11,48 +11,46 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.Drawing;
 
-
-/*
- * Senior Project
- * 
- * The purpose of this class it to provide visualization functionality
- * for the PCA Excel add-in.  Two plots will be available: scores plot
- * and loadings plot.
- * 
- */
+/// <summary>
+/// The purpose of this class it to provide visualization functionality
+/// for the PCA Excel add-in.  Two plots will be available: scores plot
+/// and loadings plot.
+/// </summary>
 namespace PCA_Addin
 {
     public class PCA_graphing
     {
-        /* 
-         * Scores plot is a statistical analysis that 
-         * 
-         * @param col1 The first column to be used in plot (PC1)
-         * @param col2 The seconf column to be used in plot (PC2)
-         * @author Senior Project
-         */
+
+        /// <summary>
+        /// A scores plot is a statistical analysis that identifies unusual
+        /// clusters from a data set and plots them based on their associated
+        /// principal component scores.
+        /// </summary>
+        /// <param name="col1">The first column to be used in plot (PC1)</param>
+        /// <param name="col2">The seconf column to be used in plot (PC2)</param>
+        /// <author>Rowan Senior Project</author>
         public void scoresPlot(string col1, string col2)
         {
             //TODO: Check for same columns
-            MessageBox.Show("Column " + col1 + " and " + "column " + col2 + " selected.");
+            //MessageBox.Show("Column " + col1 + " and " + "column " + col2 + " selected.");
 
             Excel.Worksheet ws;
             Excel.Workbook activeWorkbook;
+            Excel.Range chartRange;
+            object misValue = System.Reflection.Missing.Value;
 
             ws = Globals.ThisAddIn.Application.Sheets[1];
             activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook;
-            /*
-            Microsoft.Office.Tools.Excel.Chart chart1 = this.Controls.AddChart(this.Range["D2", "H12"], "chart1");
 
-            chart1.SetSourceData(this.Range["A1", "B5"], Excel.XlRowCol.xlColumns);
-            chart1.ChartType = Excel.XlChartType.xlXYScatterLines;
+            Excel.ChartObjects xlCharts = (Excel.ChartObjects)ws.ChartObjects(Type.Missing);
+            Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(10, 80, 300, 250);
+            Excel.Chart chartPage = myChart.Chart;
 
-            Excel.ChartGroup group = (Excel.ChartGroup)chart1.XYGroups(1);
+            chartRange = ws.get_Range("B:B," + col1 + ":" + col1 + "," + col2 + ":" + col2);
+            chartPage.SetSourceData(chartRange, misValue);
+            chartPage.ChartType = Excel.XlChartType.xlXYScatter;
 
-            MessageBox.Show("The axis group is: " +group.AxisGroup.ToString());
-             */
-
-            MessageBox.Show("Value is: " + (ws.Cells[10,10] as Excel.Range).Value);
+            //MessageBox.Show("Value is: " + (ws.Cells[10,10] as Excel.Range).Value);
         }
     }
 

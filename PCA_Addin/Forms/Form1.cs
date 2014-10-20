@@ -7,6 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+/// <summary>
+/// Provides a form that allows the user to select desired columns to
+/// be graphed.
+/// </summary>
+/// <author>Rowan Senior Project</author>
 namespace PCA_Addin.Forms
 {
     public partial class Form1 : Form
