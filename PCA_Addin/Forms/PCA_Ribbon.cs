@@ -83,7 +83,6 @@ namespace PCA_Addin
         /// <author>Rowan Senior Project</author>
         private void Scores_bt_Click(object sender, RibbonControlEventArgs e)
         {
-            PCA_graphing pca_Graphing = new PCA_graphing();
             Form1 scores = new Form1();
             scores.Show();
         }

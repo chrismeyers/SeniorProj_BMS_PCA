@@ -27,8 +27,8 @@ namespace PCA_Addin.Forms
             string col2 = textBox2.Text;
 
             PCA_graphing pcaGraphing = new PCA_graphing();
+            this.Close(); //closes form
             pcaGraphing.scoresPlot(col1, col2);
-            this.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
