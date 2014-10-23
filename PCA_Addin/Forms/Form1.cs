@@ -11,7 +11,7 @@ using System.Windows.Forms;
 /// Provides a form that allows the user to select desired columns to
 /// be graphed.
 /// </summary>
-/// <author>Rowan Senior Project</author>
+/// <author>Rowan Senior Project - Christian Marin, Chris Meyers, Derick Palos</author>
 namespace PCA_Addin.Forms
 {
     public partial class Form1 : Form

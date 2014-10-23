@@ -19,7 +19,7 @@ using PCA_Addin.Forms;
 /// for the PCA Excel add-in.  Two plots will be available: scores plot
 /// and loadings plot.
 /// </summary>
-/// <author>Rowan Senior Project</author>
+/// <author>Rowan Senior Project - Christian Marin, Chris Meyers, Derick Palos</author>
 namespace PCA_Addin
 {
     public class PCA_graphing
@@ -32,7 +32,7 @@ namespace PCA_Addin
         /// </summary>
         /// <param name="col1">The first column to be used in plot (PC1)</param>
         /// <param name="col2">The seconf column to be used in plot (PC2)</param>
-        /// <author>Rowan Senior Project</author>
+        /// <author>Rowan Senior Project - Chris Meyers</author>
         public void scoresPlot(string col1, string col2){
             //MessageBox.Show("Column " + col1 + " and " + "column " + col2 + " selected.");
             String pc1 = col1.ToUpper();
@@ -47,10 +47,19 @@ namespace PCA_Addin
             ws = Globals.ThisAddIn.Application.Sheets[1];
             activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook;
 
-            //Define chart specs
+            //Define chart variables
             Excel.ChartObjects xlCharts = (Excel.ChartObjects)ws.ChartObjects(Type.Missing);
             Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(10, 80, 300, 250);
             Excel.Chart chartPage = myChart.Chart;
+
+            chartPage.ChartType = Excel.XlChartType.xlXYScatter;
+            myChart.Chart.HasTitle = true;
+            String currentChartName = ws.Cells[1, columnLetterToNumber(pc1)].Value.ToString() + " vs. " +
+                ws.Cells[1, columnLetterToNumber(pc2)].Value.ToString();
+            chartPage.ChartTitle.Text = currentChartName;
+
+            //Makes chart on new chartsheet instead of current worksheet.
+            //chartPage.Location(Excel.XlChartLocation.xlLocationAsNewSheet, "Scores Plot"); 
 
             //Define data strucures needed for data manipulation and plotting.
             int numRows = ws.UsedRange.Rows.Count;
@@ -107,7 +116,6 @@ namespace PCA_Addin
                 chartRange = ws.get_Range("B:B" + "," + pc1 + ":" + pc1 + "," + pc2 + ":" + pc2);
                 chartPage.SetSourceData(chartRange, misValue);
                  */
-                chartPage.ChartType = Excel.XlChartType.xlXYScatter;
                  
                 //Loop through each group and make a series for each one.
                 foreach (String group in groups) {
@@ -144,7 +152,7 @@ namespace PCA_Addin
         /// <summary>
         /// Allows user to enter new point upon an error.
         /// </summary>
-        /// <author>Rowan Senior Project</author>
+        /// <author>Rowan Senior Project - Chris Meyers</author>
         private void newColumns() {
             Form1 scoresError = new Form1();
             scoresError.Show();
@@ -156,6 +164,11 @@ namespace PCA_Addin
         /// </summary>
         /// <author>Rowan Senior Project</author>
         private int columnLetterToNumber(String col) {
+            //This conversion algorithm was taken from:
+            //Astander. "Convert A to 1 B to 2 … Z to 26 and then AA to 27 AB to 28 
+            //  (column indexes to column references in Excel)". 23 Dec. 2009.
+            //  stackoverflow. 20 Oct. 2014.
+            //  http://stackoverflow.com/questions/1951517/convert-a-to-1-b-to-2-z-to-26-and-then-aa-to-27-ab-to-28-column-indexes-to
             int conversion = 0;
             string currentCol = col;
             for (int iChar = currentCol.Length - 1; iChar >= 0; iChar--)
@@ -170,7 +183,7 @@ namespace PCA_Addin
         /// <summary>
         /// Checks for column input errors.
         /// </summary>
-        /// <author>Rowan Senior Project</author>
+        /// <author>Rowan Senior Project - Chris Meyers, Christian Marin</author>
         private Boolean errorCheck(String pc1, String pc2) {
             Boolean error = false;
             //Check for unique columns

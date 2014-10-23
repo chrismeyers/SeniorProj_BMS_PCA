@@ -80,7 +80,7 @@ namespace PCA_Addin
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /// <author>Rowan Senior Project</author>
+        /// <author>Rowan Senior Project - Christian Marin, Chris Meyers, Derick Palos</author>
         private void Scores_bt_Click(object sender, RibbonControlEventArgs e)
         {
             Form1 scores = new Form1();
