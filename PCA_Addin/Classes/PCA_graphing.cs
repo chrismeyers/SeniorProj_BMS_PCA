@@ -39,39 +39,44 @@ namespace PCA_Addin
             String pc1 = col1.ToUpper();
             String pc2 = col2.ToUpper();
 
-            Excel.Worksheet ws;
-            Excel.Workbook activeWorkbook;
-            Excel.Range chartRange;
-            object misValue = System.Reflection.Missing.Value;
-
-            //Get current spreadsheet
-            ws = Globals.ThisAddIn.Application.Sheets[1];
-            activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook;
-
-            //Define chart variables
-            Excel.Worksheet wsChart = (Excel.Worksheet)activeWorkbook.Worksheets.Add();
-            Excel.ChartObjects xlCharts = (Excel.ChartObjects)wsChart.ChartObjects(Type.Missing);
-            Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(0, 0, 600, 300);
-            Excel.Chart chartPage = myChart.Chart;
-
-            wsChart.Name = "Scores Plot";
-            chartPage.ChartType = Excel.XlChartType.xlXYScatter;
-            myChart.Chart.HasTitle = true;
-            String currentChartName = ws.Cells[1, columnLetterToNumber(pc1)].Value.ToString() + " vs. " +
-                ws.Cells[1, columnLetterToNumber(pc2)].Value.ToString();
-            chartPage.ChartTitle.Text = currentChartName;
-
-            //Define data strucures needed for data manipulation and plotting.
-            int numRows = ws.UsedRange.Rows.Count;
-            ArrayList groups = new ArrayList();
-            ArrayList groupPoints = new ArrayList();
-            Dictionary<String, ArrayList> plotData = new Dictionary<String, ArrayList>();
-
             if (errorCheck(pc1, pc2)){
                 //Asks for new valid columns upon error.
                 newColumns();
             }
             else{
+                Excel.Worksheet ws;
+                Excel.Workbook activeWorkbook;
+                Excel.Range chartRange;
+                object misValue = System.Reflection.Missing.Value;
+
+                //Get current spreadsheet
+                ws = Globals.ThisAddIn.Application.Sheets["Scores"];
+                activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook;
+
+                //Define chart variables
+                //Excel.Worksheet wsChart = (Excel.Worksheet)activeWorkbook.Worksheets.Add(); //Adds scores plot to a new worksheet
+                Excel.Chart wsChart = (Excel.Chart)activeWorkbook.Charts.Add(); //Adds scores plot to a new chartsheet
+                wsChart.ChartArea.Clear(); //Ensures the chartsheet is blank before adding scores plot
+                Excel.ChartObjects xlCharts = (Excel.ChartObjects)wsChart.ChartObjects(Type.Missing);
+                //Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(0, 0, 575, 300); //used if plot was added to a worksheet
+                Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(0, 0, 688, 946); //used if plot was added to a chartsheet
+                Excel.Chart chartPage = myChart.Chart;
+
+            
+                chartPage.ChartType = Excel.XlChartType.xlXYScatter;
+                myChart.Chart.HasTitle = true;
+                String currentChartName = ws.Cells[1, columnLetterToNumber(pc1)].Value.ToString() + " vs. " +
+                    ws.Cells[1, columnLetterToNumber(pc2)].Value.ToString();
+                wsChart.Name = "Scores Plot" + "(" + currentChartName + ")";
+                chartPage.ChartTitle.Text = currentChartName;
+
+                //Define data strucures needed for data manipulation and plotting.
+                int numRows = ws.UsedRange.Rows.Count;
+                ArrayList groups = new ArrayList();
+                ArrayList groupPoints = new ArrayList();
+                Dictionary<String, ArrayList> plotData = new Dictionary<String, ArrayList>();
+
+            
                 //Process selected columns and store in a dictionary.
                 plotData = createDictionary(pc1, pc2, ws, numRows, groups, groupPoints);
 
@@ -224,6 +229,10 @@ namespace PCA_Addin
             //Ensure selected columns are not Sample or Group (A or B).
             if (pc1.Equals("A") || pc1.Equals("B") || pc2.Equals("A") || pc2.Equals("B")){
                 MessageBox.Show("Columns A and B are reserved.  Please choose another column.", "Error");
+                error = true;
+            }
+            if (String.IsNullOrEmpty(pc1) || String.IsNullOrEmpty(pc2)){
+                MessageBox.Show("One or more columns were not specified.", "Error");
                 error = true;
             }
             //TODO: only allow valid columns (Letters)
