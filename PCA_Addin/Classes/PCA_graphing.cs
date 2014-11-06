@@ -238,6 +238,52 @@ namespace PCA_Addin
             //TODO: only allow valid columns (Letters)
             return error;
         }
+
+        /// <summary>
+        /// Suppplies the data for the ComboBoxes used in Scores Plot. 
+        /// </summary>
+        /// <returns></returns> a string array containing the data for the Score Plot ComboBox
+        public static ArrayList getComboBoxData()
+        {
+            //Get current spreadsheet
+            Excel.Worksheet ws = Globals.ThisAddIn.Application.Sheets["Scores"];
+            
+            //Get entire range of the first row
+            Excel.Range xlRangeHeader = ws.get_Range("A1", "A1").EntireRow;
+
+            //Convert the cell values to an arraylist of strings
+            object[,] cellObjectValues = xlRangeHeader.Value2;
+            string[] cellStringValues = cellObjectValues.Cast<string>().ToArray();
+
+            //Remove first two strings
+            ArrayList tempCellValues = new ArrayList(cellStringValues);
+            tempCellValues.RemoveRange(0, 2);
+            
+            return tempCellValues;
+        }
+        /// <summary>
+        /// Converts a index into the string representation of the column at that index
+        /// </summary>
+        /// <param name="columnNumber"></param> the column at this index
+        /// <returns></returns> the string representing the column index 
+         public static string GetExcelColumnName(int columnNumber)
+         {
+             int dividend = columnNumber;
+             string columnName = String.Empty;
+             int modulo;
+
+             while (dividend > 0)
+             {
+                 modulo = (dividend - 1) % 26;
+                 columnName = Convert.ToChar(65 + modulo).ToString() + columnName;
+                 dividend = (int)((dividend - modulo) / 26);
+             }
+
+             return columnName;
+         }
+
     }
 
+
 }
+

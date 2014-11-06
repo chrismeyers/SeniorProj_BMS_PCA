@@ -6,6 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Collections;
+using System.Diagnostics;
+
 
 /// <summary>
 /// Provides a form that allows the user to select desired columns to
@@ -14,17 +17,27 @@ using System.Windows.Forms;
 /// <author>Rowan Senior Project - Christian Marin, Chris Meyers, Derick Palos</author>
 namespace PCA_Addin.Forms
 {
+     
     public partial class Form1 : Form
     {
+       
         public Form1()
         {
             InitializeComponent();
+            loadComboBoxes();
+        }
+
+        private void loadComboBoxes()
+        {
+            comboBox1.DataSource = PCA_graphing.getComboBoxData();
+            comboBox2.DataSource = PCA_graphing.getComboBoxData();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string col1 = textBox1.Text;
-            string col2 = textBox2.Text;
+            
+            string col1 = PCA_graphing.GetExcelColumnName(comboBox1.SelectedIndex + 3);
+            string col2 = PCA_graphing.GetExcelColumnName(comboBox2.SelectedIndex + 3);
 
             PCA_graphing pcaGraphing = new PCA_graphing();
             this.Close(); //closes form
@@ -35,5 +48,6 @@ namespace PCA_Addin.Forms
         {
             this.Close();
         }
+
     }
 }
