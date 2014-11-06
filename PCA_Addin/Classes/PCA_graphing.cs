@@ -242,7 +242,8 @@ namespace PCA_Addin
         /// <summary>
         /// Suppplies the data for the ComboBoxes used in Scores Plot. 
         /// </summary>
-        /// <returns></returns> a string array containing the data for the Score Plot ComboBox
+        /// <returns>a string array containing the data for the Score Plot ComboBox</returns>
+        /// <author>Rowan Senior Project - Christian Marin</author>
         public static ArrayList getComboBoxData()
         {
             //Get current spreadsheet
@@ -263,11 +264,17 @@ namespace PCA_Addin
         }
         /// <summary>
         /// Converts a index into the string representation of the column at that index
+        /// 
         /// </summary>
-        /// <param name="columnNumber"></param> the column at this index
-        /// <returns></returns> the string representing the column index 
+        /// <param name="columnNumber">the column at this index</param>
+        /// <returns>the string representing the column index</returns>
+        /// <author>Rowan Senior Project</author>
          public static string GetExcelColumnName(int columnNumber)
          {
+             //This conversion algorithm was taken from:
+             //Graham. "How to convert a column number (eg. 127) into an 
+             //  excel column (eg. AA)". 8 Oct. 2008. stackoverflow. 1 Nov. 2014.
+             //  http://stackoverflow.com/questions/181596/how-to-convert-a-column-number-eg-127-into-an-excel-column-eg-aa
              int dividend = columnNumber;
              string columnName = String.Empty;
              int modulo;
