@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PCA_Addin.PCA_Method" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="PCA_Addin.PCA_Method.svd" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PCA_Addin.PCA_Method.tsort" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PCA_Addin.PCA_Method.sblas" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PCA_Addin.PCA_Method.reflections" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PCA_Addin.PCA_Method.ablas" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PCA_Addin.PCA_Method.blas" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PCA_Addin.PCA_Method.ablasf" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PCA_Addin.PCA_Method.ap" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PCA_Addin.PCA_Method.pca" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PCA_Addin.PCA_Method.creflections" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Struct Name="PCA_Addin.PCA_Method.complex" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Class Name="PCA_Addin.PCA_Method.math" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PCA_Addin.PCA_Method.rotations" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PCA_Addin.PCA_Method.bdsvd" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PCA_Addin.PCA_Method.ortfac" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PCA_Addin.PCA_Method.hblas" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PCA_Addin.PCA_Method.basicstatops" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PCA_Addin.PCA_Method.basestat" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PCA_Addin.PCA_Method.serializer" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PCA_Addin.PCA_Method.apserv" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\PCA_method.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Classes\PCA_method.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

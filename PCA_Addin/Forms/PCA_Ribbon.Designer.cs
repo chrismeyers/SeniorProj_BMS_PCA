@@ -38,8 +38,9 @@
             this.PCA_data = this.Factory.CreateRibbonGroup();
             this.Read_bt = this.Factory.CreateRibbonButton();
             this.Write_bt = this.Factory.CreateRibbonButton();
-            this.Scores_bt = this.Factory.CreateRibbonButton();
             this.Calculate_bt = this.Factory.CreateRibbonButton();
+            this.Scores_bt = this.Factory.CreateRibbonButton();
+            this.Loading_bt = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.PCA_data.SuspendLayout();
             // 
@@ -56,6 +57,7 @@
             this.PCA_data.Items.Add(this.Write_bt);
             this.PCA_data.Items.Add(this.Calculate_bt);
             this.PCA_data.Items.Add(this.Scores_bt);
+            this.PCA_data.Items.Add(this.Loading_bt);
             this.PCA_data.Label = "PCA Data Functions";
             this.PCA_data.Name = "PCA_data";
             // 
@@ -77,6 +79,15 @@
             this.Write_bt.ShowImage = true;
             this.Write_bt.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.Write_bt_Click);
             // 
+            // Calculate_bt
+            // 
+            this.Calculate_bt.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.Calculate_bt.Image = global::PCA_Addin.Properties.Resources.applications;
+            this.Calculate_bt.Label = "Calculate";
+            this.Calculate_bt.Name = "Calculate_bt";
+            this.Calculate_bt.ShowImage = true;
+            this.Calculate_bt.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.Calculate_bt_Click);
+            // 
             // Scores_bt
             // 
             this.Scores_bt.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -86,14 +97,14 @@
             this.Scores_bt.ShowImage = true;
             this.Scores_bt.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.Scores_bt_Click);
             // 
-            // Calculate_bt
+            // Loading_bt
             // 
-            this.Calculate_bt.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.Calculate_bt.Image = global::PCA_Addin.Properties.Resources.applications;
-            this.Calculate_bt.Label = "Calculate";
-            this.Calculate_bt.Name = "Calculate_bt";
-            this.Calculate_bt.ShowImage = true;
-            this.Calculate_bt.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.Calculate_bt_Click);
+            this.Loading_bt.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.Loading_bt.Image = global::PCA_Addin.Properties.Resources.scores;
+            this.Loading_bt.Label = "Loading Plot";
+            this.Loading_bt.Name = "Loading_bt";
+            this.Loading_bt.ShowImage = true;
+            this.Loading_bt.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.Loading_bt_Click);
             // 
             // PCA_Ribbon
             // 
@@ -116,6 +127,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton Write_bt;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton Calculate_bt;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton Scores_bt;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton Loading_bt;
     }
 
     partial class ThisRibbonCollection

@@ -29,8 +29,8 @@ namespace PCA_Addin.Forms
 
         private void loadComboBoxes()
         {
-            comboBox1.DataSource = PCA_graphing.getComboBoxData();
-            comboBox2.DataSource = PCA_graphing.getComboBoxData();
+            comboBox1.DataSource = PCA_graphing.getComboBoxData("Scores");
+            comboBox2.DataSource = PCA_graphing.getComboBoxData("Scores");
         }
 
         private void button1_Click(object sender, EventArgs e)

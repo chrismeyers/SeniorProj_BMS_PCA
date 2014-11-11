@@ -24,6 +24,10 @@ namespace PCA_Addin
 {
     public class PCA_graphing
     {
+        public void loadingPlot()
+        {
+
+        }
 
         /// <summary>
         /// A scores plot is a statistical analysis that identifies unusual
@@ -244,23 +248,42 @@ namespace PCA_Addin
         /// </summary>
         /// <returns>a string array containing the data for the Score Plot ComboBox</returns>
         /// <author>Rowan Senior Project - Christian Marin</author>
-        public static ArrayList getComboBoxData()
+        public static ArrayList getComboBoxData(String graphType)
         {
             //Get current spreadsheet
             Excel.Worksheet ws = Globals.ThisAddIn.Application.Sheets["Scores"];
             
             //Get entire range of the first row
-            Excel.Range xlRangeHeader = ws.get_Range("A1", "A1").EntireRow;
+            Excel.Range xlRangeHeader;
 
             //Convert the cell values to an arraylist of strings
-            object[,] cellObjectValues = xlRangeHeader.Value2;
-            string[] cellStringValues = cellObjectValues.Cast<string>().ToArray();
-
-            //Remove first two strings
-            ArrayList tempCellValues = new ArrayList(cellStringValues);
-            tempCellValues.RemoveRange(0, 2);
+            object[,] cellObjectValues;
+            string[] cellStringValues;
+            ArrayList tempCellValues;
             
-            return tempCellValues;
+            if (graphType.Equals("Scores")) {
+                xlRangeHeader = ws.get_Range("A1", "A1").EntireRow;
+                cellObjectValues = xlRangeHeader.Value2;
+                cellStringValues = cellObjectValues.Cast<string>().ToArray();
+                tempCellValues = new ArrayList(cellStringValues);
+
+                //Remove first two strings
+                tempCellValues.RemoveRange(0, 2);
+
+                return tempCellValues;
+            }
+            else if(graphType.Equals("Loadings")){
+                int numRows = ws.UsedRange.Rows.Count;
+                tempCellValues = new ArrayList();
+                for (int i = 2; i <= numRows; i++)
+                {
+                    //MessageBox.Show("1: " + ws.Cells[i, 1].Value.ToString());
+                    tempCellValues.Add(ws.Cells[i, 1].Value.ToString());
+                }
+                return tempCellValues;
+            }
+            
+            return null;
         }
         /// <summary>
         /// Converts a index into the string representation of the column at that index

@@ -86,6 +86,14 @@ namespace PCA_Addin
             Form1 scores = new Form1();
             scores.Show();
         }
+
+        private void Loading_bt_Click(object sender, RibbonControlEventArgs e)
+        {
+            Form2 loadings = new Form2();
+            loadings.Show();
+        }
+
+        
        
         
     }
