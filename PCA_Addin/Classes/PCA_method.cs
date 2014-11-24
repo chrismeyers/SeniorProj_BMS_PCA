@@ -134,6 +134,7 @@ namespace PCA_Addin
                 //
                 m = new double[nvars - 1 + 1];
                 t = new double[npoints - 1 + 1];
+
                 for (j = 0; j <= nvars - 1; j++)
                 {
                     for (i_ = 0; i_ <= npoints - 1; i_++)
@@ -147,6 +148,7 @@ namespace PCA_Addin
                     basestat.samplemoments(t, npoints, ref mean, ref variance, ref skewness, ref kurtosis);
                     m[j] = mean;
                 }
+
                 //
                 // Center, apply SVD, prepare output
                 //
@@ -166,6 +168,7 @@ namespace PCA_Addin
                         a[i, i_] = a[i, i_] - m[i_];
                     }
                 }
+
                 for (i = npoints; i <= nvars - 1; i++)
                 {
                     for (j = 0; j <= nvars - 1; j++)
@@ -173,6 +176,8 @@ namespace PCA_Addin
                         a[i, j] = 0;
                     }
                 }
+
+                // Perform singular value decomposition
                 if (!svd.rmatrixsvd(a, Math.Max(npoints, nvars), nvars, 0, 1, 2, ref s2, ref u, ref vt))
                 {
                     info = -4;
@@ -186,7 +191,10 @@ namespace PCA_Addin
                     }
                 }
                 v = new double[nvars - 1 + 1, nvars - 1 + 1];
-                blas.copyandtranspose(vt, 0, nvars - 1, 0, nvars - 1, ref v, 0, nvars - 1, 0, nvars - 1);
+                v = vt;
+                
+                //blas.copyandtranspose(vt, 0, nvars - 1, 0, nvars - 1, ref v, 0, nvars - 1, 0, nvars - 1);
+               
             }
         }
         /// <summary>
@@ -9310,6 +9318,7 @@ namespace PCA_Addin
                     blas.inplacetranspose(ref u, 0, nru - 1, 0, ncu - 1, ref work);
                     result = bdsvd.rmatrixbdsvd(ref w, e, minmn, isupper, false, ref a, 0, ref u, nru, ref vt, ncvt);
                     blas.inplacetranspose(ref u, 0, nru - 1, 0, ncu - 1, ref work);
+                   
                     return result;
                 }
 

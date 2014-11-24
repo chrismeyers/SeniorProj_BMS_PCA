@@ -80,9 +80,16 @@ namespace PCA_Addin
 
             //create a new instance of the PCA method 
             PCA_Method Perform_Calc = new PCA_Method();
+            
 
             // perform the calculation and then send the values back to the holders we have for them at the top
             Perform_Calc.pcabuildbasis(all_pointV_2D_array, total_files, total_files, out Out_info, out Out_s2, out Out_v);
+
+            // total_files  -- number of records/cases
+            // total_points -- number of variables
+            //Perform_Calc.pcabuildbasis(all_pointV_2D_array, total_files, total_points, out Out_info, out Out_s2, out Out_v);
+            //double[,] vTranspose = Out_v;
+            //Perform_Calc.copyandtranspose(Out_v, 0, nvars - 1, 0, nvars - 1, ref vTranspose, 0, nvars - 1, 0, nvars - 1);
         }
 
 
@@ -169,6 +176,16 @@ namespace PCA_Addin
             {
                 MessageBox.Show("Scores already exists please remove old before recalculating", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            //Row 1 Group and Sample Text
+            oSht2.Cells[1, 1].value = "Sample";
+            oSht2.Cells[1, 2].value = "Group";
+            //PC Headers
+            for (int i = 3; i < Out_v.GetLength(0); i++)
+            {
+                oSht2.Cells[1, i].value = "PC" + (i - 2);
+            }
+
 
             row = 2;
 

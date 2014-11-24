@@ -24,7 +24,7 @@ namespace PCA_Addin
 {
     public class PCA_graphing
     {
-        public void loadingPlot()
+        public void loadingsPlot()
         {
 
         }
@@ -66,13 +66,25 @@ namespace PCA_Addin
                 Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(0, 0, 688, 946); //used if plot was added to a chartsheet
                 Excel.Chart chartPage = myChart.Chart;
 
-            
                 chartPage.ChartType = Excel.XlChartType.xlXYScatter;
                 myChart.Chart.HasTitle = true;
                 String currentChartName = ws.Cells[1, columnLetterToNumber(pc1)].Value.ToString() + " vs. " +
                     ws.Cells[1, columnLetterToNumber(pc2)].Value.ToString();
                 wsChart.Name = "Scores Plot" + "(" + currentChartName + ")";
                 chartPage.ChartTitle.Text = currentChartName;
+
+                //Set axes fixed to -1 to 1
+                var vertAxis = (Excel.Axis)chartPage.Axes(Excel.XlAxisType.xlValue, Excel.XlAxisGroup.xlPrimary);
+                vertAxis.MaximumScaleIsAuto = false;
+                vertAxis.MaximumScale = 1;
+                vertAxis.MinimumScaleIsAuto = false;
+                vertAxis.MinimumScale = -1;
+
+                var yAxis = (Excel.Axis)chartPage.Axes(Excel.XlAxisType.xlCategory, Excel.XlAxisGroup.xlPrimary);
+                yAxis.MaximumScaleIsAuto = false;
+                yAxis.MaximumScale = 1;
+                yAxis.MinimumScaleIsAuto = false;
+                yAxis.MinimumScale = -1;
 
                 //Define data strucures needed for data manipulation and plotting.
                 int numRows = ws.UsedRange.Rows.Count;
@@ -195,29 +207,6 @@ namespace PCA_Addin
         }
 
         /// <summary>
-        /// Converts column letter to its associated numerical value.
-        /// Ex: A->1, B->2, etc.
-        /// </summary>
-        /// <param name="col">string representation of the column to be converted</param>
-        /// <author>Rowan Senior Project</author>
-        private int columnLetterToNumber(String col) {
-            //This conversion algorithm was taken from:
-            //Astander. "Convert A to 1 B to 2 … Z to 26 and then AA to 27 AB to 28 
-            //  (column indexes to column references in Excel)". 23 Dec. 2009.
-            //  stackoverflow. 20 Oct. 2014.
-            //  http://stackoverflow.com/questions/1951517/convert-a-to-1-b-to-2-z-to-26-and-then-aa-to-27-ab-to-28-column-indexes-to
-            int conversion = 0;
-            string currentCol = col;
-            for (int iChar = currentCol.Length - 1; iChar >= 0; iChar--)
-            {
-                char colPiece = currentCol[iChar];
-                int colNum = colPiece - 64;
-                conversion = conversion + colNum * (int)Math.Pow(26, col.Length - (iChar + 1));
-            }
-            return conversion;
-        }
-
-        /// <summary>
         /// Checks for column input errors.
         /// </summary>
         /// <param name="pc1">the first principal component selected</param>
@@ -285,14 +274,38 @@ namespace PCA_Addin
             
             return null;
         }
+
+        /// <summary>
+        /// Converts column letter to its associated numerical value.
+        /// Ex: A->1, B->2, etc.
+        /// </summary>
+        /// <param name="col">string representation of the column to be converted</param>
+        /// <author>Rowan Senior Project</author>
+        private int columnLetterToNumber(String col)
+        {
+            //This conversion algorithm was taken from:
+            //Astander. "Convert A to 1 B to 2 … Z to 26 and then AA to 27 AB to 28 
+            //  (column indexes to column references in Excel)". 23 Dec. 2009.
+            //  stackoverflow. 20 Oct. 2014.
+            //  http://stackoverflow.com/questions/1951517/convert-a-to-1-b-to-2-z-to-26-and-then-aa-to-27-ab-to-28-column-indexes-to
+            int conversion = 0;
+            string currentCol = col;
+            for (int iChar = currentCol.Length - 1; iChar >= 0; iChar--)
+            {
+                char colPiece = currentCol[iChar];
+                int colNum = colPiece - 64;
+                conversion = conversion + colNum * (int)Math.Pow(26, col.Length - (iChar + 1));
+            }
+            return conversion;
+        }
+
         /// <summary>
         /// Converts a index into the string representation of the column at that index
-        /// 
         /// </summary>
         /// <param name="columnNumber">the column at this index</param>
         /// <returns>the string representing the column index</returns>
         /// <author>Rowan Senior Project</author>
-         public static string GetExcelColumnName(int columnNumber)
+         public static string columnNumberToLetter(int columnNumber)
          {
              //This conversion algorithm was taken from:
              //Graham. "How to convert a column number (eg. 127) into an 

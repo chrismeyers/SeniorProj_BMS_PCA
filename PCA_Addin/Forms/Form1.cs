@@ -35,9 +35,8 @@ namespace PCA_Addin.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-            string col1 = PCA_graphing.GetExcelColumnName(comboBox1.SelectedIndex + 3);
-            string col2 = PCA_graphing.GetExcelColumnName(comboBox2.SelectedIndex + 3);
+            string col1 = PCA_graphing.columnNumberToLetter(comboBox1.SelectedIndex + 3);
+            string col2 = PCA_graphing.columnNumberToLetter(comboBox2.SelectedIndex + 3);
 
             PCA_graphing pcaGraphing = new PCA_graphing();
             this.Close(); //closes form
