@@ -34,6 +34,29 @@ namespace PCA_Addin
 
             return;
         }
+
+        public void calculateLoading(double[,] quanData, double[,] scoresData, out double[,] loadingData)
+        {
+            //get length and width of quan table data
+            int col = scoresData.GetLength(0);
+            int row = scoresData.GetLength(1);
+            double[,] corrCoefficients = new double[0, 0];
+            loadingData = new double[row, col];
+
+            //calculate correlation coefficients
+            basestat.pearsoncorrm(quanData, row, col, ref corrCoefficients);
+
+            //multiply eigenvalues(scores) by correlation coefficents to create loadings data matrix
+            for (int i = 0; i < corrCoefficients.GetLength(0); i++)
+            {
+                for (int j = 0; j < corrCoefficients.GetLength(1); j++)
+                {
+                    loadingData[i, j] = corrCoefficients[i, j] * scoresData[i, j];
+                }
+            }
+
+            return;
+        }
         /// <summary>
         ///  Principal components analysis
         /// </summary>

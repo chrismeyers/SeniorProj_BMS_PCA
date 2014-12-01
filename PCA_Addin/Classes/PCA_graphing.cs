@@ -24,9 +24,10 @@ namespace PCA_Addin
 {
     public class PCA_graphing
     {
-        public void loadingsPlot()
-        {
+        String type = "";
 
+        public PCA_graphing(String type) {
+            this.type = type;
         }
 
         /// <summary>
@@ -37,7 +38,7 @@ namespace PCA_Addin
         /// <param name="col1">The first column to be used in plot (PC1)</param>
         /// <param name="col2">The seconf column to be used in plot (PC2)</param>
         /// <author>Rowan Senior Project - Chris Meyers</author>
-        public void scoresPlot(string col1, string col2)
+        public void plot(string col1, string col2)
         {
             //MessageBox.Show("Column " + col1 + " and " + "column " + col2 + " selected.");
             String pc1 = col1.ToUpper();
@@ -45,7 +46,7 @@ namespace PCA_Addin
 
             if (errorCheck(pc1, pc2)){
                 //Asks for new valid columns upon error.
-                newColumns();
+                newColumns(type);
             }
             else{
                 Excel.Worksheet ws;
@@ -54,7 +55,7 @@ namespace PCA_Addin
                 object misValue = System.Reflection.Missing.Value;
 
                 //Get current spreadsheet
-                ws = Globals.ThisAddIn.Application.Sheets["Scores"];
+                ws = Globals.ThisAddIn.Application.Sheets[type];
                 activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook;
 
                 //Define chart variables
@@ -70,7 +71,7 @@ namespace PCA_Addin
                 myChart.Chart.HasTitle = true;
                 String currentChartName = ws.Cells[1, columnLetterToNumber(pc1)].Value.ToString() + " vs. " +
                     ws.Cells[1, columnLetterToNumber(pc2)].Value.ToString();
-                wsChart.Name = "Scores Plot" + "(" + currentChartName + ")";
+                wsChart.Name = type+ " Plot" + "(" + currentChartName + ")";
                 chartPage.ChartTitle.Text = currentChartName;
 
                 //Set axes fixed to -1 to 1
@@ -201,8 +202,8 @@ namespace PCA_Addin
         /// Allows user to enter new point upon an error.
         /// </summary>
         /// <author>Rowan Senior Project - Chris Meyers</author>
-        private void newColumns() {
-            Form1 scoresError = new Form1();
+        private void newColumns(String type) {
+            Form1 scoresError = new Form1(type);
             scoresError.Show();
         }
 
@@ -240,7 +241,7 @@ namespace PCA_Addin
         public static ArrayList getComboBoxData(String graphType)
         {
             //Get current spreadsheet
-            Excel.Worksheet ws = Globals.ThisAddIn.Application.Sheets["Scores"];
+            Excel.Worksheet ws = Globals.ThisAddIn.Application.Sheets[graphType];
             
             //Get entire range of the first row
             Excel.Range xlRangeHeader;
@@ -250,7 +251,7 @@ namespace PCA_Addin
             string[] cellStringValues;
             ArrayList tempCellValues;
             
-            if (graphType.Equals("Scores")) {
+            
                 xlRangeHeader = ws.get_Range("A1", "A1").EntireRow;
                 cellObjectValues = xlRangeHeader.Value2;
                 cellStringValues = cellObjectValues.Cast<string>().ToArray();
@@ -260,19 +261,9 @@ namespace PCA_Addin
                 tempCellValues.RemoveRange(0, 2);
 
                 return tempCellValues;
-            }
-            else if(graphType.Equals("Loadings")){
-                int numRows = ws.UsedRange.Rows.Count;
-                tempCellValues = new ArrayList();
-                for (int i = 2; i <= numRows; i++)
-                {
-                    //MessageBox.Show("1: " + ws.Cells[i, 1].Value.ToString());
-                    tempCellValues.Add(ws.Cells[i, 1].Value.ToString());
-                }
-                return tempCellValues;
-            }
             
-            return null;
+            
+           
         }
 
         /// <summary>

@@ -83,13 +83,13 @@ namespace PCA_Addin
         /// <author>Rowan Senior Project - Christian Marin, Chris Meyers, Derick Palos</author>
         private void Scores_bt_Click(object sender, RibbonControlEventArgs e)
         {
-            Form1 scores = new Form1();
+            Form1 scores = new Form1("Scores");
             scores.Show();
         }
 
         private void Loading_bt_Click(object sender, RibbonControlEventArgs e)
         {
-            Form2 loadings = new Form2();
+            Form1 loadings = new Form1("Loadings");
             loadings.Show();
         }
 

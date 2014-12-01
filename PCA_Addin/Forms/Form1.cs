@@ -20,17 +20,23 @@ namespace PCA_Addin.Forms
      
     public partial class Form1 : Form
     {
-       
-        public Form1()
+        String type = "";
+        public Form1(String type)
         {
+            this.type = type;
             InitializeComponent();
             loadComboBoxes();
+        
+
+            label3.Text = "Select two columns for a " + type.ToLower() + " plot";
+            Text = type + " Plot Column Select";
+            
         }
 
         private void loadComboBoxes()
         {
-            comboBox1.DataSource = PCA_graphing.getComboBoxData("Scores");
-            comboBox2.DataSource = PCA_graphing.getComboBoxData("Scores");
+            comboBox1.DataSource = PCA_graphing.getComboBoxData(type);
+            comboBox2.DataSource = PCA_graphing.getComboBoxData(type);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -38,9 +44,10 @@ namespace PCA_Addin.Forms
             string col1 = PCA_graphing.columnNumberToLetter(comboBox1.SelectedIndex + 3);
             string col2 = PCA_graphing.columnNumberToLetter(comboBox2.SelectedIndex + 3);
 
-            PCA_graphing pcaGraphing = new PCA_graphing();
+            PCA_graphing pcaGraphing = new PCA_graphing(type);
             this.Close(); //closes form
-            pcaGraphing.scoresPlot(col1, col2);
+
+            pcaGraphing.plot(col1, col2);
         }
 
         private void button2_Click(object sender, EventArgs e)

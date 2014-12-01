@@ -26,6 +26,8 @@ namespace PCA_Addin
         int Out_info = 0;
         double[] Out_s2;
         double[,] Out_v;
+        double[,] Out_loading;
+       
 
         /// <summary>
         /// Purpose: constructor for our class 
@@ -177,15 +179,8 @@ namespace PCA_Addin
                 MessageBox.Show("Scores already exists please remove old before recalculating", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            //Row 1 Group and Sample Text
-            oSht2.Cells[1, 1].value = "Sample";
-            oSht2.Cells[1, 2].value = "Group";
-            //PC Headers
-            for (int i = 3; i < Out_v.GetLength(0); i++)
-            {
-                oSht2.Cells[1, i].value = "PC" + (i - 2);
-            }
-
+            //add header on first row of spreadsheet
+            makeHeader(oSht2);
 
             row = 2;
 
@@ -207,9 +202,68 @@ namespace PCA_Addin
                }
                col = 3;    
                row++;
-             }
+            }
 
+            //------------------------------------------------------------------------- third added sheet
+            PCA_Method loading_calc = new PCA_Method();
+            loading_calc.calculateLoading(all_pointV_2D_array, Out_v, out Out_loading);
+
+            Excel.Worksheet oSht3 = Globals.ThisAddIn.Application.Worksheets.Add();
+            try
+            {
+                //find any duplicate sheets and remove them 
+                for (int i = 1; i <= Globals.ThisAddIn.Application.Sheets.Count; i++)
+                {
+                    if (Globals.ThisAddIn.Application.ActiveWorkbook.Sheets[i].Name.Contains("Loadings"))
+                    {
+                        Globals.ThisAddIn.Application.ActiveWorkbook.Sheets[i].Delete();
+                    }
+                }
+
+                //set the name of the new sheet
+                oSht3.Name = "Loadings";
+            }
+            catch
+            {
+                MessageBox.Show("Loadings already exists please remove old before recalculating", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            //add header on first row of spreadsheet
+            makeHeader(oSht3);
+
+            row = 2;
+
+            foreach (cls_PCA_File f in ThisAddIn.Go_QT.Lst_File)
+            {
+                oSht3.Cells[row, 1].value = f.File_Name;
+                oSht3.Cells[row, 2].value = f.Group_Name;
+                row++;
+            }
+
+            row = 2;
+            col = 3;
+            for (int i = 0; i < Out_loading.GetLength(0); i++)
+            {
+                for (int j = 0; j < Out_loading.GetLength(1); j++)
+                {
+                    oSht3.Cells[row, col].value = Out_loading[i, j];
+                    col++;
+                }
+                col = 3;
+                row++;
+            }
         } // end void Write_Out_Calculation
+
+        private void makeHeader(Excel.Worksheet sheet) {
+            //Row 1 Group and Sample Text
+            sheet.Cells[1, 1].value = "Sample";
+            sheet.Cells[1, 2].value = "Group";
+            //PC Headers
+            for (int i = 3; i < Out_v.GetLength(0) + 3; i++)
+            {
+                sheet.Cells[1, i].value = "PC" + (i - 2);
+            }
+        }
 
     } // end class
 } // end name space
