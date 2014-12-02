@@ -35,6 +35,13 @@ namespace PCA_Addin
             return;
         }
 
+        /// <summary>
+        /// Calculates a loadings matrix.
+        /// </summary>
+        /// <param name="quanData">The initial data matrix.</param>
+        /// <param name="scoresData">The eigenvalue matrix.</param>
+        /// <param name="loadingData">The matrix of loadings data.</param>
+        /// <author>Rowan Senior Project - Christian Marin, Chris Meyers, Derick Palos</author>
         public void calculateLoading(double[,] quanData, double[,] scoresData, out double[,] loadingData)
         {
             //get length and width of quan table data

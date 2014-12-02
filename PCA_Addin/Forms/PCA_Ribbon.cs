@@ -87,6 +87,14 @@ namespace PCA_Addin
             scores.Show();
         }
 
+        /// <summary>
+        /// Upon selecting the loadings plot option in the Excel add-in ribbon,
+        /// form1 appears and prompts the user to specify the desired columns
+        /// to be graphed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <author>Rowan Senior Project - Christian Marin, Chris Meyers, Derick Palos</author>
         private void Loading_bt_Click(object sender, RibbonControlEventArgs e)
         {
             Form1 loadings = new Form1("Loadings");

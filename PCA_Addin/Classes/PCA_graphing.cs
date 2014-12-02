@@ -26,7 +26,13 @@ namespace PCA_Addin
     {
         String type = "";
 
-        public PCA_graphing(String type) {
+        /// <summary>
+        /// Concstructor for the PCA_graphing class.
+        /// </summary>
+        /// <param name="type">Specifies the type of graph to be made (scores, loadings).</param>
+        /// <author>Rowan Senior Project</author>
+        public PCA_graphing(String type) 
+        {
             this.type = type;
         }
 
@@ -34,6 +40,9 @@ namespace PCA_Addin
         /// A scores plot is a statistical analysis that identifies unusual
         /// clusters from a data set and plots them based on their associated
         /// principal component scores.
+        /// 
+        /// A loadings plot is the correlation between the original data and
+        /// the calculated principal component factors.
         /// </summary>
         /// <param name="col1">The first column to be used in plot (PC1)</param>
         /// <param name="col2">The seconf column to be used in plot (PC2)</param>
@@ -44,11 +53,13 @@ namespace PCA_Addin
             String pc1 = col1.ToUpper();
             String pc2 = col2.ToUpper();
 
-            if (errorCheck(pc1, pc2)){
+            if (errorCheck(pc1, pc2))
+            {
                 //Asks for new valid columns upon error.
                 newColumns(type);
             }
-            else{
+            else
+            {
                 Excel.Worksheet ws;
                 Excel.Workbook activeWorkbook;
                 Excel.Range chartRange;
@@ -59,11 +70,9 @@ namespace PCA_Addin
                 activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook;
 
                 //Define chart variables
-                //Excel.Worksheet wsChart = (Excel.Worksheet)activeWorkbook.Worksheets.Add(); //Adds scores plot to a new worksheet
                 Excel.Chart wsChart = (Excel.Chart)activeWorkbook.Charts.Add(); //Adds scores plot to a new chartsheet
                 wsChart.ChartArea.Clear(); //Ensures the chartsheet is blank before adding scores plot
                 Excel.ChartObjects xlCharts = (Excel.ChartObjects)wsChart.ChartObjects(Type.Missing);
-                //Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(0, 0, 575, 300); //used if plot was added to a worksheet
                 Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(0, 0, 688, 946); //used if plot was added to a chartsheet
                 Excel.Chart chartPage = myChart.Chart;
 
@@ -115,7 +124,8 @@ namespace PCA_Addin
         /// <param name="groupPoints">ArrayList that holds the data points for the current group</param>
         /// <author>Rowan Senior Project - Chris Meyers</author>
         private Dictionary<String, ArrayList> createDictionary(String pc1, String pc2, Excel.Worksheet ws, 
-                                                                int numRows, ArrayList groups, ArrayList groupPoints) { 
+                                                      int numRows, ArrayList groups, ArrayList groupPoints)
+        { 
             //Inititally make previous group first group name.
             //This will be used to check if the group changed.
             //If it did, add the previous data collected to a dictionary
@@ -136,7 +146,6 @@ namespace PCA_Addin
                     plotData.Add(prevGrp, (ArrayList)groupPoints.Clone());
                     groupPoints.Clear();
                 }
-
 
                 //Get current row x and y values.
                 //Add them to an array, add this array to the group ArrayList
@@ -167,10 +176,14 @@ namespace PCA_Addin
         /// </summary>
         /// <param name="groups">ArrayList that holds data for all the groups</param>
         /// <param name="seriesCollection">a collection object that holds all the series</param>
-        /// <param name="plotData">the dictionary that holds data required to plot(Keys:groups, Values:PC points)</param>
+        /// <param name="plotData">the dictionary that holds data required to plot
+        ///                         (Keys:groups, Values:PC points)</param>
         /// <author>Rowan Senior Project - Chris Meyers</author>
-        private void generateScoresPlot(ArrayList groups, Excel.SeriesCollection seriesCollection, Dictionary<String, ArrayList> plotData) {
-            foreach (String group in groups){
+        private void generateScoresPlot(ArrayList groups, Excel.SeriesCollection seriesCollection,
+                                                            Dictionary<String, ArrayList> plotData) 
+        {
+            foreach (String group in groups)
+            {
                 //MessageBox.Show(group);
 
                 Excel.Series currentGroup = seriesCollection.NewSeries();
@@ -202,7 +215,8 @@ namespace PCA_Addin
         /// Allows user to enter new point upon an error.
         /// </summary>
         /// <author>Rowan Senior Project - Chris Meyers</author>
-        private void newColumns(String type) {
+        private void newColumns(String type)
+        {
             Form1 scoresError = new Form1(type);
             scoresError.Show();
         }
@@ -212,24 +226,28 @@ namespace PCA_Addin
         /// </summary>
         /// <param name="pc1">the first principal component selected</param>
         /// <param name="pc2">the second principal component selected</param>
-        /// <author>Rowan Senior Project - Chris Meyers, Christian Marin</author>
-        private Boolean errorCheck(String pc1, String pc2) {
+        /// <author>Rowan Senior Project - Chris Meyers, Christian Marin, Derick Palos</author>
+        private Boolean errorCheck(String pc1, String pc2)
+        {
             Boolean error = false;
             //Check for unique columns
-            if (pc1.Equals(pc2)){
+            if (pc1.Equals(pc2))
+            {
                 MessageBox.Show("Please select two different columns.", "Error");
                 error = true;
             }
             //Ensure selected columns are not Sample or Group (A or B).
-            if (pc1.Equals("A") || pc1.Equals("B") || pc2.Equals("A") || pc2.Equals("B")){
+            if (pc1.Equals("A") || pc1.Equals("B") || pc2.Equals("A") || pc2.Equals("B"))
+            {
                 MessageBox.Show("Columns A and B are reserved.  Please choose another column.", "Error");
                 error = true;
             }
-            if (String.IsNullOrEmpty(pc1) || String.IsNullOrEmpty(pc2)){
+            if (String.IsNullOrEmpty(pc1) || String.IsNullOrEmpty(pc2))
+            {
                 MessageBox.Show("One or more columns were not specified.", "Error");
                 error = true;
             }
-            //TODO: only allow valid columns (Letters)
+
             return error;
         }
 
@@ -250,20 +268,16 @@ namespace PCA_Addin
             object[,] cellObjectValues;
             string[] cellStringValues;
             ArrayList tempCellValues;
-            
-            
-                xlRangeHeader = ws.get_Range("A1", "A1").EntireRow;
-                cellObjectValues = xlRangeHeader.Value2;
-                cellStringValues = cellObjectValues.Cast<string>().ToArray();
-                tempCellValues = new ArrayList(cellStringValues);
 
-                //Remove first two strings
-                tempCellValues.RemoveRange(0, 2);
+            xlRangeHeader = ws.get_Range("A1", "A1").EntireRow;
+            cellObjectValues = xlRangeHeader.Value2;
+            cellStringValues = cellObjectValues.Cast<string>().ToArray();
+            tempCellValues = new ArrayList(cellStringValues);
 
-                return tempCellValues;
-            
-            
-           
+            //Remove first two strings
+            tempCellValues.RemoveRange(0, 2);
+
+            return tempCellValues;
         }
 
         /// <summary>
@@ -278,7 +292,8 @@ namespace PCA_Addin
             //Astander. "Convert A to 1 B to 2 … Z to 26 and then AA to 27 AB to 28 
             //  (column indexes to column references in Excel)". 23 Dec. 2009.
             //  stackoverflow. 20 Oct. 2014.
-            //  http://stackoverflow.com/questions/1951517/convert-a-to-1-b-to-2-z-to-26-and-then-aa-to-27-ab-to-28-column-indexes-to
+            //  http://stackoverflow.com/questions/1951517/convert-a-to-1-b-to-2-z-to-26-and-
+            //  then-aa-to-27-ab-to-28-column-indexes-to
             int conversion = 0;
             string currentCol = col;
             for (int iChar = currentCol.Length - 1; iChar >= 0; iChar--)
@@ -301,7 +316,8 @@ namespace PCA_Addin
              //This conversion algorithm was taken from:
              //Graham. "How to convert a column number (eg. 127) into an 
              //  excel column (eg. AA)". 8 Oct. 2008. stackoverflow. 1 Nov. 2014.
-             //  http://stackoverflow.com/questions/181596/how-to-convert-a-column-number-eg-127-into-an-excel-column-eg-aa
+             //  http://stackoverflow.com/questions/181596/how-to-convert-a-column-number-
+             //  eg-127-into-an-excel-column-eg-aa
              int dividend = columnNumber;
              string columnName = String.Empty;
              int modulo;
@@ -315,9 +331,5 @@ namespace PCA_Addin
 
              return columnName;
          }
-
     }
-
-
 }
-

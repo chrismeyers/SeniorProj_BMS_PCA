@@ -205,6 +205,7 @@ namespace PCA_Addin
             }
 
             //------------------------------------------------------------------------- third added sheet
+            // Author: Rowan Senior Project - Christian Marin, Chris Meyers, Derick Palos
             PCA_Method loading_calc = new PCA_Method();
             loading_calc.calculateLoading(all_pointV_2D_array, Out_v, out Out_loading);
 
@@ -225,7 +226,8 @@ namespace PCA_Addin
             }
             catch
             {
-                MessageBox.Show("Loadings already exists please remove old before recalculating", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Loadings already exists please remove old before recalculating",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             //add header on first row of spreadsheet
@@ -254,7 +256,14 @@ namespace PCA_Addin
             }
         } // end void Write_Out_Calculation
 
-        private void makeHeader(Excel.Worksheet sheet) {
+
+        /// <summary>
+        /// Makes the header when outputting to an Excel worksheet
+        /// </summary>
+        /// <param name="sheet">The sheet that is being written to.</param>
+        /// <author>Rowan Senior Project - Christian Marin, Chris Meyers, Derick Palos</author>
+        private void makeHeader(Excel.Worksheet sheet)
+        {
             //Row 1 Group and Sample Text
             sheet.Cells[1, 1].value = "Sample";
             sheet.Cells[1, 2].value = "Group";
